@@ -1,41 +1,49 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
 import { __ } from '@wordpress/i18n';
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
-import { useBlockProps } from '@wordpress/block-editor';
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
+import { useBlockProps, InspectorControls, RichText } from '@wordpress/block-editor';
 import './editor.scss';
+import { Flex, FlexItem, PanelBody, PanelRow, TextControl } from '@wordpress/components';
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
- * @return {Element} Element to render.
- */
-export default function Edit() {
-	return (
-		<p { ...useBlockProps() }>
-			{ __(
-				'Pricing Table Block – hello from the editor!',
-				'pricing-table-block'
-			) }
-		</p>
-	);
+export default function Edit({ attributes, setAttributes }) {
+  console.log('attributes: ', attributes);
+
+  const { numOfColumns, borderRadius } = attributes;
+  console.log('numOfColumns: ', numOfColumns);
+
+  const flexItems = Array.from({ length: numOfColumns }, (_, index) => (
+    <FlexItem className='flex-item'>
+      Card { index + 1}
+    </FlexItem>
+  ));
+
+  return (
+    <>
+      <InspectorControls>
+        <PanelBody>
+          <PanelRow>
+            <TextControl
+              label='Number of items'
+              value={numOfColumns}
+              onChange={(value) => setAttributes({ numOfColumns: value})}
+              />
+          </PanelRow>
+        </PanelBody>
+        <PanelBody>
+          <PanelRow>
+            <TextControl
+              label='Border Radius'
+              value={borderRadius} 
+              onChange={(value) => setAttributes({ borderRadius: value})}
+              />
+          </PanelRow>
+        </PanelBody>
+      </InspectorControls>
+
+      <Flex {...useBlockProps({ attributes })}
+        align='center'
+        justify='space-around'
+      >
+        { flexItems }
+      </Flex>
+    </>
+  );
 }

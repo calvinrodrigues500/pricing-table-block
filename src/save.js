@@ -15,9 +15,9 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {Element} Element to render.
  */
-export default function save() {
+export default function save({ attributes }) {
 	return (
-		<p { ...useBlockProps.save() }>
+		<p { ...useBlockProps.save({ attributes }) }>
 			{ 'Pricing Table Block – hello from the saved content!' }
 		</p>
 	);
