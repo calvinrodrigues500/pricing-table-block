@@ -30,24 +30,31 @@ function Edit({
   attributes,
   setAttributes
 }) {
-  console.log('attributes: ', attributes);
   const {
     numOfColumns,
-    borderRadius
+    borderRadius,
+    flexContent
   } = attributes;
-  console.log('numOfColumns: ', numOfColumns);
+  console.log('numOfColumns: ', flexContent);
   const flexItems = Array.from({
     length: numOfColumns
   }, (_, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.FlexItem, {
-    className: "flex-item"
-  }, "Card ", index + 1));
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
-    label: "Number of items",
+    className: "flex-item",
+    style: {
+      borderRadius: borderRadius
+    }
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, "Card ", index + 1), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
+    value: "Dolor voluptate ut enim aliquip velit tempor ullamco est velit ad exercitation nisi. Laboris et ad anim aute id proident. Cupidatat cupidatat enim incididunt velit et laborum voluptate ea consequat fugiat occaecat exercitation tempor veniam."
+  }))));
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.RangeControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Number of items', ''),
     value: numOfColumns,
     onChange: value => setAttributes({
       numOfColumns: value
-    })
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
+    }),
+    min: 1,
+    max: 6
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
     label: "Border Radius",
     value: borderRadius,
     onChange: value => setAttributes({
@@ -153,11 +160,24 @@ __webpack_require__.r(__webpack_exports__);
 function save({
   attributes
 }) {
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  const {
+    numOfColumns,
+    borderRadius
+  } = attributes;
+  const flexItems = Array.from({
+    length: numOfColumns
+  }, (_, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "pricing-block-flex-item",
+    style: {
+      borderRadius: borderRadius
+    }
+  }, "Card ", index + 1));
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
       attributes
-    })
-  }, 'Pricing Table Block – hello from the saved content!');
+    }),
+    className: "pricing-block-flex"
+  }, flexItems);
 }
 
 /***/ }),
@@ -242,7 +262,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/pricing-table-block","version":"0.1.0","title":"Pricing Table Block","category":"design","icon":"smiley","description":"Example block scaffolded with Create Block tool.","example":{},"supports":{"html":false,"color":{"background":true,"text":true}},"textdomain":"pricing-table-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"numOfColumns":{"type":"number","default":2},"borderRadius":{"type":"rich-text","default":"8px"}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"cr/pricing-table-block","version":"0.1.0","title":"Pricing Table Block","category":"design","icon":"smiley","description":"Example block scaffolded with Create Block tool.","example":{},"supports":{"html":false,"color":{"background":true,"text":true}},"textdomain":"pricing-table-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"numOfColumns":{"type":"number","default":2},"borderRadius":{"type":"rich-text","default":"8px"},"flexContent":{"type":"array","default":[],"contents":{"type":"object","properties":{"content":{"type":"string"}}}}}}');
 
 /***/ })
 

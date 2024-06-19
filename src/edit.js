@@ -1,17 +1,23 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, RichText } from '@wordpress/block-editor';
 import './editor.scss';
-import { Flex, FlexItem, PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import { Flex, FlexItem, PanelBody, PanelRow, TextControl, RangeControl } from '@wordpress/components';
 
 export default function Edit({ attributes, setAttributes }) {
-  console.log('attributes: ', attributes);
 
-  const { numOfColumns, borderRadius } = attributes;
-  console.log('numOfColumns: ', numOfColumns);
+  const { numOfColumns, borderRadius, flexContent } = attributes;
+  console.log('numOfColumns: ', flexContent);
 
   const flexItems = Array.from({ length: numOfColumns }, (_, index) => (
-    <FlexItem className='flex-item'>
-      Card { index + 1}
+    <FlexItem className='flex-item' style={{ borderRadius: borderRadius}}>
+      <h3>
+        Card { index + 1}
+      </h3>
+      <p>
+        <RichText
+          value='Dolor voluptate ut enim aliquip velit tempor ullamco est velit ad exercitation nisi. Laboris et ad anim aute id proident. Cupidatat cupidatat enim incididunt velit et laborum voluptate ea consequat fugiat occaecat exercitation tempor veniam.'
+        />
+      </p>
     </FlexItem>
   ));
 
@@ -20,14 +26,14 @@ export default function Edit({ attributes, setAttributes }) {
       <InspectorControls>
         <PanelBody>
           <PanelRow>
-            <TextControl
-              label='Number of items'
+            <RangeControl
+              label={ __('Number of items', '')}
               value={numOfColumns}
               onChange={(value) => setAttributes({ numOfColumns: value})}
+              min={1}
+              max={6}
               />
           </PanelRow>
-        </PanelBody>
-        <PanelBody>
           <PanelRow>
             <TextControl
               label='Border Radius'

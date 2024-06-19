@@ -16,9 +16,21 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @return {Element} Element to render.
  */
 export default function save({ attributes }) {
-	return (
-		<p { ...useBlockProps.save({ attributes }) }>
-			{ 'Pricing Table Block – hello from the saved content!' }
-		</p>
-	);
+
+  const { numOfColumns, borderRadius } = attributes;
+  
+  const flexItems = Array.from({ length: numOfColumns }, (_, index) => (
+    <div className='pricing-block-flex-item' style={{ borderRadius: borderRadius}}>
+      Card { index + 1}
+    </div>
+  ));
+
+  return (
+    <div
+      {...useBlockProps.save({ attributes })}
+      className='pricing-block-flex'
+      >
+      { flexItems }
+    </div>
+  );
 }
