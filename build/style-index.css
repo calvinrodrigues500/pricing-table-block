@@ -11,10 +11,12 @@
   display: flex;
   gap: 1rem;
   justify-content: center;
+  word-wrap: break-word;
 }
 .pricing-block-flex .pricing-block-flex-item {
   border: 1px solid #000;
   padding: 1rem;
+  max-width: 300px;
 }
 
 /*# sourceMappingURL=style-index.css.map*/

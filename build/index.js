@@ -113,7 +113,7 @@ function Edit({
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
       attributes
     }),
-    align: "center",
+    align: "stretch",
     justify: "center",
     gap: gap
   }, flexItems));

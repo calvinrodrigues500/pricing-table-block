@@ -94,7 +94,7 @@ export default function Edit({ attributes, setAttributes }) {
       </InspectorControls>
 
       <Flex {...useBlockProps({ attributes })}
-        align='center'
+        align='stretch'
         justify='center'
         gap={gap}
       >
