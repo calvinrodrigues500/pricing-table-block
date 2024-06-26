@@ -7,8 +7,10 @@
  * Replace them with your own styles or remove the file completely.
  */
 .flex-item {
-  border: 1px solid black;
+  border: 1px solid red;
   padding: 1rem;
+  min-width: 100px !important;
+  max-width: 300px !important;
 }
 
 /*# sourceMappingURL=index.css.map*/

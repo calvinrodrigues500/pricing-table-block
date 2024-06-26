@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "create-block/pricing-table-block",
+  "name": "cr/pricing-table-block",
   "version": "0.1.0",
   "title": "Pricing Table Block",
   "category": "design",
@@ -23,11 +23,24 @@
   "attributes": {
     "numOfColumns": {
       "type": "number",
-      "default": 2
+      "default": 1
     },
     "borderRadius": {
       "type": "rich-text",
       "default": "8px"
+    },
+    "gap": {
+      "type": "rich-text",
+      "default": "1rem"
+    },
+    "pricingCards": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Card Title",
+          "content": "Here goes the card body"
+        }
+      ]
     }
   }
 }

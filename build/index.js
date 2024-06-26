@@ -21,6 +21,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./block.json */ "./src/block.json");
+
 
 
 
@@ -30,35 +32,90 @@ function Edit({
   attributes,
   setAttributes
 }) {
-  console.log('attributes: ', attributes);
   const {
     numOfColumns,
-    borderRadius
+    borderRadius,
+    pricingCards,
+    gap
   } = attributes;
-  console.log('numOfColumns: ', numOfColumns);
-  const flexItems = Array.from({
-    length: numOfColumns
-  }, (_, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.FlexItem, {
-    className: "flex-item"
-  }, "Card ", index + 1));
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
-    label: "Number of items",
-    value: numOfColumns,
-    onChange: value => setAttributes({
-      numOfColumns: value
+  const flexItems = pricingCards.map((card, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.FlexItem, {
+    className: "flex-item",
+    style: {
+      borderRadius: borderRadius
+    },
+    key: index
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
+    tagName: "h3",
+    value: card.title,
+    onChange: title => updatePricingCard(index, {
+      ...card,
+      title
     })
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
+    value: card.content,
+    onChange: content => updatePricingCard(index, {
+      ...card,
+      content
+    })
+  }))));
+  const updatePricingCard = (index, updatedCard) => {
+    const newCards = [...pricingCards];
+    newCards[index] = updatedCard;
+    setAttributes({
+      pricingCards: newCards
+    });
+  };
+  const modifyNumberOfCards = count => {
+    const currentNumberOfCards = pricingCards.length;
+    const defaultCard = _block_json__WEBPACK_IMPORTED_MODULE_5__.attributes.pricingCards["default"][0];
+    if (count > pricingCards.length) {
+      const additionalNumberOfCards = count - currentNumberOfCards;
+      const newCards = Array.from({
+        length: additionalNumberOfCards
+      }, () => ({
+        'title': defaultCard.title,
+        'pricie': '',
+        'content': defaultCard.content
+      }));
+      setAttributes({
+        pricingCards: [...pricingCards, ...newCards],
+        numOfColumns: pricingCards.length + additionalNumberOfCards
+      });
+    } else {
+      setAttributes({
+        pricingCards: pricingCards.slice(0, count),
+        numOfColumns: count
+      });
+    }
+  };
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.RangeControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Number of cards', 'pricing-table-block'),
+    value: numOfColumns,
+    onChange: count => modifyNumberOfCards(count),
+    min: 1,
+    max: 6
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
     label: "Border Radius",
     value: borderRadius,
-    onChange: value => setAttributes({
-      borderRadius: value
+    onChange: borderRadius => setAttributes({
+      borderRadius
     })
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
+    label: "Gap",
+    value: gap,
+    onChange: gap => {
+      console.log('----gap ', gap);
+      setAttributes({
+        gap
+      });
+    }
   })))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Flex, {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
       attributes
     }),
-    align: "center",
-    justify: "space-around"
+    align: "stretch",
+    justify: "center",
+    gap: gap
   }, flexItems));
 }
 
@@ -153,11 +210,32 @@ __webpack_require__.r(__webpack_exports__);
 function save({
   attributes
 }) {
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  const {
+    borderRadius,
+    pricingCards,
+    gap
+  } = attributes;
+  const cards = pricingCards.map((card, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "pricing-block-flex-item",
+    style: {
+      borderRadius
+    }
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
+    tagName: "h3",
+    value: card.title
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
+    tagName: "p",
+    value: card.content
+  })));
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
       attributes
-    })
-  }, 'Pricing Table Block – hello from the saved content!');
+    }),
+    className: "pricing-block-flex",
+    style: {
+      gap
+    }
+  }, cards);
 }
 
 /***/ }),
@@ -242,7 +320,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/pricing-table-block","version":"0.1.0","title":"Pricing Table Block","category":"design","icon":"smiley","description":"Example block scaffolded with Create Block tool.","example":{},"supports":{"html":false,"color":{"background":true,"text":true}},"textdomain":"pricing-table-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"numOfColumns":{"type":"number","default":2},"borderRadius":{"type":"rich-text","default":"8px"}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"cr/pricing-table-block","version":"0.1.0","title":"Pricing Table Block","category":"design","icon":"smiley","description":"Example block scaffolded with Create Block tool.","example":{},"supports":{"html":false,"color":{"background":true,"text":true}},"textdomain":"pricing-table-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"numOfColumns":{"type":"number","default":1},"borderRadius":{"type":"rich-text","default":"8px"},"gap":{"type":"rich-text","default":"1rem"},"pricingCards":{"type":"array","default":[{"title":"Card Title","content":"Here goes the card body"}]}}}');
 
 /***/ })
 
