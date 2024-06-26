@@ -23,23 +23,24 @@
   "attributes": {
     "numOfColumns": {
       "type": "number",
-      "default": 2
+      "default": 1
     },
     "borderRadius": {
       "type": "rich-text",
       "default": "8px"
     },
-    "flexContent": {
+    "gap": {
+      "type": "rich-text",
+      "default": "1rem"
+    },
+    "pricingCards": {
       "type": "array",
-      "default": [],
-      "contents": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string"
-          }
+      "default": [
+        {
+          "title": "Card Title",
+          "content": "Here goes the card body"
         }
-      }
+      ]
     }
   }
 }

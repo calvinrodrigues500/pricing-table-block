@@ -4,16 +4,10 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-
-.wp-block-cr-pricing-table-block {
-  // background-color: #21759b;
-  // color: #fff;
-  // padding: 2px;
-}
-
 .pricing-block-flex {
   display: flex;
   gap: 1rem;
+  justify-content: center;
 
   .pricing-block-flex-item {
     border: 1px solid #000;
