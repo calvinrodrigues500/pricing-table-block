@@ -5,4 +5,4 @@
 ## See below to configure.
 
 
-![Prigin table Block](https://github.com/calvinrodrigues500/pricing-table-block/blob/6fb7054cf79041aefbb91230c344f19551e7260f/src/Pricing-table-block.gif)
+![Pricingg-table-block](https://github.com/calvinrodrigues500/pricing-table-block/blob/main/src/Pricing-table-block.gif)
