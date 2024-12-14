@@ -4,7 +4,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -16,9 +16,32 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @return {Element} Element to render.
  */
 export default function save({ attributes }) {
-	return (
-		<p { ...useBlockProps.save({ attributes }) }>
-			{ 'Pricing Table Block – hello from the saved content!' }
-		</p>
-	);
+
+  const { borderRadius, pricingCards, gap } = attributes;
+
+  const cards = pricingCards.map((card, index) => (
+    <div
+      className='pricing-block-flex-item'
+      style={{ borderRadius }
+    }>
+      <RichText.Content
+        tagName='h3'
+        value={card.title}
+      />
+      <RichText.Content
+        tagName='p'
+        value={card.content}
+      />        
+    </div>
+  ));
+
+  return (
+    <div
+      {...useBlockProps.save({ attributes })}
+      className='pricing-block-flex'
+      style={{ gap }}
+    >
+      {cards}
+    </div>
+  );
 }
